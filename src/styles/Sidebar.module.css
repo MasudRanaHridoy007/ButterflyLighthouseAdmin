@@ -1,0 +1,86 @@
+.sidebar {
+  width: 250px; /* Fixed width for sidebar */
+  height: 100vh; /* Full height of the viewport */
+  background-color: #111; /* Default dark background */
+  color: #ddd; /* Default light text */
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  position: fixed; /* Fixed to the left of the viewport */
+  top: 0;
+  left: 0;
+  overflow: hidden; /* Prevents content overflow */
+}
+
+.sidebar.light {
+  background-color: #f4f4f4; /* Light mode background */
+  color: #333; /* Light mode text color */
+}
+
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  margin-right: 10px; /* Space between logo and text */
+}
+
+.email {
+  font-size: 0.9rem; /* Adjusted for better visibility */
+}
+
+.nav {
+  margin-top: 30px; /* Add space below the "Admin Panel" text */
+}
+
+.nav ul {
+  list-style: none; /* Remove bullet points */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  padding: 10px 10px; /* Add inner spacing */
+  font-size: 1rem; /* Uniform font size */
+  cursor: pointer;
+  gap: 10px; /* Space between icon and text */
+  text-decoration: none; /* Remove underline for links */
+  color: inherit; /* Match sidebar text color */
+  border-radius: 5px; /* Rounded hover effect */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+  margin-bottom: 20px;
+}
+
+.navItem:hover {
+  background-color: #333; /* Dark hover effect */
+  color: #fff; /* Light text on hover */
+}
+
+.footer {
+  margin-top: auto; /* Push footer to the bottom */
+}
+
+.logout,
+.themeToggle {
+  display: flex;
+  align-items: center;
+  background: none; /* No background for buttons */
+  border: none; /* No borders */
+  color: inherit; /* Inherit sidebar text color */
+  cursor: pointer;
+  margin: 10px 0;
+  font-size: 1rem;
+  padding: 10px 15px; /* Add spacing for clickable area */
+  border-radius: 5px; /* Rounded hover effect */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover transition */
+}
+
+.logout:hover,
+.themeToggle:hover {
+  background-color: #333; /* Dark hover effect */
+  color: #fff; /* Light text on hover */
+}

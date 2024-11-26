@@ -1,0 +1,142 @@
+/* Login.module.css */
+
+:root {
+  --primary-color: #f3891f;
+  --secondary-color: #facc87;
+  --font-color: #333;
+  --background-color: #000;
+  --hover-color: #5a5a5a;
+}
+
+/* Global styles */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  height: 100%;
+}
+
+/* Container */
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--background-color);
+}
+
+/* Login Box */
+.loginBox {
+  display: flex;
+  width: 800px;
+  height: 500px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Login Form */
+.loginForm {
+  flex: 1;
+  padding: 50px;
+  background-color: #fff;
+}
+
+.loginForm h2 {
+  margin-bottom: 20px;
+  color: var(--font-color);
+}
+
+/* Input Groups */
+.inputGroup {
+  margin-bottom: 20px;
+}
+
+.inputGroup label {
+  display: block;
+  font-size: 14px;
+  color: var(--font-color);
+}
+
+.inputGroup input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Options Section */
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.options label {
+  font-size: 14px;
+}
+
+.forgotPassword {
+  font-size: 14px;
+  color: var(--hover-color);
+  text-decoration: none;
+}
+
+.forgotPassword:hover {
+  text-decoration: underline;
+}
+
+/* Buttons */
+.loginButton {
+  width: 100%;
+  padding: 10px;
+  background-color: var(--secondary-color);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.loginButton:hover {
+  background-color: var(--primary-color);
+}
+
+/* Signup Link */
+.signupLink {
+  margin-top: 20px;
+  font-size: 14px;
+  color: var(--hover-color);
+}
+
+.signupLink a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.signupLink a:hover {
+  text-decoration: underline;
+}
+
+/* Login Image Section */
+.loginImage {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-color));
+  position: relative;
+}
+
+.loginImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
