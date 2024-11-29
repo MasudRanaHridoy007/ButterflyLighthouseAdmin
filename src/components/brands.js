@@ -16,6 +16,7 @@ const Brands = () => {
     headline: "",
     description: "",
     image: null,
+    link: "", // New link field
   });
   const [tableData, setTableData] = useState([]); // State for table data
   const [editMode, setEditMode] = useState(false); // Edit mode toggle
@@ -41,13 +42,14 @@ const Brands = () => {
         headline: formData.headline,
         description: formData.description,
         image: formData.image,
+        link: formData.link, // Include the link field
       };
 
       setTableData([...tableData, newRow]);
     }
 
     setShowForm(false);
-    setFormData({ id: null, headline: "", description: "", image: null });
+    setFormData({ id: null, headline: "", description: "", image: null, link: "" });
   };
 
   const handleEdit = (row) => {
@@ -63,7 +65,7 @@ const Brands = () => {
   const handleCancel = () => {
     setShowForm(false);
     setEditMode(false);
-    setFormData({ id: null, headline: "", description: "", image: null });
+    setFormData({ id: null, headline: "", description: "", image: null, link: "" });
   };
 
   return (
@@ -102,6 +104,15 @@ const Brands = () => {
                 />
               </div>
               <div className="formGroup">
+                <label>Link</label>
+                <TextField
+                  name="link"
+                  value={formData.link}
+                  onChange={handleInputChange}
+                  fullWidth
+                />
+              </div>
+              <div className="formGroup">
                 <label>Image</label>
                 <input
                   type="file"
@@ -130,6 +141,7 @@ const Brands = () => {
             <th>ID</th>
             <th>Headline</th>
             <th>Description</th>
+            <th>Link</th> {/* New Link column */}
             <th>Image</th>
             <th>Actions</th>
           </tr>
@@ -140,6 +152,15 @@ const Brands = () => {
               <td>{row.id}</td>
               <td>{row.headline}</td>
               <td>{row.description}</td>
+              <td>
+                {row.link ? (
+                  <a href={row.link} target="_blank" rel="noopener noreferrer">
+                    {row.link}
+                  </a>
+                ) : (
+                  "No Link"
+                )}
+              </td>
               <td>
                 {row.image ? (
                   <img
