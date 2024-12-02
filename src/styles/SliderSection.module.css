@@ -1,64 +1,123 @@
 .sliderSection {
+  margin-left: 300px;
   padding: 20px;
+  background-color: #f4f6f9;
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   gap: 24px;
-  background-color: #f4f6f9;
-  border-radius: 8px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.previewSection {
-  border: 2px dashed #ccc;
+.previewBox {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border: 2px solid #ccc;
   border-radius: 8px;
-  padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 250px;
-  background-color: #ffffff;
-  transition: border-color 0.3s ease;
-}
-
-.previewSection:hover {
-  border-color: #1976d2;
+  overflow: hidden;
+  background-color: #e9ecef;
 }
 
 .previewImage {
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 8px;
 }
+.previewTitle {
+  position: absolute;
+  bottom: 65px;
+  left: 50px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 10px 0;
+  text-align: center;
+  color: #ffffff;
+}
 
-.uploadSection {
+.placeholderText {
+  color: #6c757d;
+  font-size: 16px;
+}
+
+.dynamicButton {
+  position: absolute;
+  bottom: 16px;
+  left: 50px;
+  padding: 10px 18px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+
+.formSection {
   display: flex;
-  gap: 12px;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formField , .clrformField{
+  display: flex;
   align-items: center;
+  gap: 16px;
+  margin-bottom: 5px;
+}
+
+
+.formField label,.clrformField label {
+  flex-basis: 150px; /* Fixed width for labels */
+  text-align: left; /* Align label text to the right */
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.formField input {
+  flex: 1; /* Inputs will take the remaining space */
+  padding: 5px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+.clrformField input {
+  flex: 1; 
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+.formField input:focus {
+  outline: none;
+  border-color: #1976d2;
+  box-shadow: 0 0 4px rgba(25, 118, 210, 0.4);
 }
 
 .uploadButton {
+  width: 100%;
   padding: 10px 18px;
-  cursor: pointer;
   background-color: #1976d2;
   color: white;
   border: none;
   border-radius: 4px;
   font-size: 14px;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
+  cursor: pointer;
+  align-self: flex-start; /* Align the button to the left */
 }
 
 .uploadButton:hover {
   background-color: #005bb5;
 }
 
+
 .tableSection {
-  border: 1px solid #ddd;
-  border-radius: 8px;
   overflow-x: auto;
   background-color: #ffffff;
   padding: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 table {
@@ -66,94 +125,49 @@ table {
   border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
   border: 1px solid #ddd;
   padding: 12px;
   text-align: center;
-  font-size: 14px;
-  color: #333333;
 }
 
 th {
   background-color: #f1f3f6;
-  font-weight: 600;
-}
-
-td {
-  background-color: #ffffff;
-}
-
-th:first-child, td:first-child {
-  width: 50px; /* Adjust serial column width */
 }
 
 td img {
   max-width: 100px;
   max-height: 60px;
-  border-radius: 4px;
 }
 
-.deleteButton {
+.deleteButton, .editButton {
   padding: 8px 14px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.deleteButton{
   background-color: #e74c3c;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 13px;
-  transition: background-color 0.3s ease;
+}
+.editButton{
+  background-color: #3fb0cf;
+  margin-right: 10px
 }
 
-.deleteButton:hover {
-  background-color: #c0392b;
-}
-
-.fieldsSection {
+.formFieldRow {
   display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.field {
-  display: flex;
-  gap: 12px;
+  gap: 20px; /* Space between Title and Title Color fields */
   align-items: center;
-  justify-content: space-between;
 }
 
-.textField {
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  flex: 1;
-  font-size: 14px;
-  color: #333333;
-  background-color: #ffffff;
+.formField {
+  flex: 1; /* Adjust width dynamically */
 }
 
-.textField:focus {
-  outline: none;
-  border-color: #1976d2;
-  box-shadow: 0px 0px 4px rgba(25, 118, 210, 0.4);
-}
-
-.colorPicker {
+.formField input[type="color"] {
+  width: 50px; /* Adjust color picker size */
+  height: 30px;
   padding: 2px;
-  border: none;
-  cursor: pointer;
-}
-
-.saveButton {
-  padding: 8px 16px;
-  background-color: #1976d2;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-}
-
-.saveButton:hover {
-  background-color: #000;
 }

@@ -1,88 +1,74 @@
-/* Brands.module.css */
-
-/* General container styling */
 .container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    text-align: center;
-  }
-  
-  /* Title styling */
-  .title {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  /* Add button styling */
-  .addButton {
-    margin-bottom: 20px;
-    background-color: #1976d2;
-    color: white;
-    text-transform: capitalize;
-    font-size: 1rem;
-    padding: 10px 20px;
-    border-radius: 4px;
-  }
-  
-  /* Table styling */
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  .table th,
-  .table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  .table th {
-    background-color: #f4f4f4;
-    color: #333;
-    font-weight: bold;
-  }
-  
-  .table td {
-    vertical-align: middle;
-  }
-  
-  .table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-  
-  .table tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  /* Image styling */
-  .brandImage {
-    border-radius: 8px;
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-  }
-  
-  /* Dialog form styling */
-  .form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .formGroup label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  input[type="file"] {
-    display: block;
-    margin-top: 5px;
-  }
-  
+  margin-left: 300px;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.addButton {
+  margin-bottom: 20px;
+  background-color: #1976d2;
+  color: white;
+  text-transform: capitalize;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f4f4f4;
+  color: #333;
+  font-weight: bold;
+}
+
+.table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.brandImage {
+  border-radius: 8px;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+input[type="file"] {
+  display: block;
+  margin-top: 5px;
+}

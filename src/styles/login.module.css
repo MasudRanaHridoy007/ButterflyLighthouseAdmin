@@ -2,7 +2,7 @@
 
 :root {
   --primary-color: #f3891f;
-  --secondary-color: #facc87;
+  --secondary-color: #e19e3a;
   --font-color: #333;
   --background-color: #000;
   --hover-color: #5a5a5a;
@@ -133,10 +133,10 @@ html {
 }
 
 .loginImage img {
-  width: 100%;
-  height: 100%;
   object-fit: cover;
-  position: absolute;
-  top: 0;
-  left: 0;
+}
+@media (max-width: 768px) {
+.loginBox{
+  flex-direction: column-reverse;
+}
 }

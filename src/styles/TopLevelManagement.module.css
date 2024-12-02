@@ -1,79 +1,77 @@
-/* Container to limit table width */
 .container {
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  /* Table styling */
-  .table {
-    width: 100%;
-    border-collapse: collapse; /* Ensures no space between cells */
-  }
-  
-  .table th, .table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-  }
-  
+  margin-left: 300px;
+  padding: 20px;
+  box-sizing: border-box;
+}
 
-  /* Table cell adjustments */
-  .table td {
-    max-width: 150px;     /* Limit the cell width */
-    text-align: center;   /* Center the image in the table cell */
-    vertical-align: middle; /* Vertically align the image */
-  }
-  
-  /* Button Styling */
-  .addButton {
-    margin: 10px 0;
-  }
-  
-  /* Dialog styling */
-  .formGroup {
-    margin-bottom: 20px;
-  }
-  
-  .formGroup label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .formGroup input,
-  .formGroup textarea {
-    width: 100%;
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse; /* Ensures no space between cells */
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.table td {
+  max-width: 150px; /* Limit the cell width */
+  text-align: center; /* Center the image in the table cell */
+  vertical-align: middle; /* Vertically align the image */
+}
+
+.addButton {
+  margin: 10px 0 !important;
+}
+
+.formGroup {
+  margin-bottom: 20px;
+}
+
+.formGroup label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.formGroup input,
+.formGroup textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.memberImage {
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .container {
     padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
   }
-  
-  /* For the add new form */
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+
+  .table {
+    font-size: 14px;
   }
-  
-  /* Styling for Dialog */
-  .MuiDialog-paper {
-    width: 400px; /* Set width for the dialog */
-    padding: 20px;
+
+  .addButton {
+    font-size: 12px;
   }
-  
-  /* Add some responsiveness */
-  @media (max-width: 768px) {
-    .container {
-      padding: 10px;
-    }
-  
-    .table {
-      font-size: 14px;
-    }
-  
-    .addButton {
-      font-size: 12px;
-    }
-  }
-  
+}

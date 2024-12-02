@@ -1,3 +1,7 @@
+* {
+  font-family: 'Nunito', sans-serif;
+  
+}
 .App {
   text-align: center;
 }
@@ -35,8 +39,4 @@
   to {
     transform: rotate(360deg);
   }
-}
-
-.main-content{
-  margin-left: 300px;
 }

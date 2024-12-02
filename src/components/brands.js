@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import "../styles/brands.module.css"; // CSS file for styling
+import React, { useState, useEffect } from "react";
+import axiosInstance from "../Axios/axiosinstance"; // Ensure Axios is configured for your backend
+import styles from "../styles/brands.module.css"; // Use CSS modules
 import {
   Button,
   TextField,
@@ -10,71 +11,100 @@ import {
 } from "@mui/material";
 
 const Brands = () => {
-  const [showForm, setShowForm] = useState(false); // Control form visibility
+  const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
-    id: null,
-    headline: "",
-    description: "",
-    image: null,
-    link: "", // New link field
+    b_id: null,
+    title: "",
+    details: "",
+    url: "",
+    b_image: null,
   });
-  const [tableData, setTableData] = useState([]); // State for table data
-  const [editMode, setEditMode] = useState(false); // Edit mode toggle
+  const [tableData, setTableData] = useState([]);
+  const [editMode, setEditMode] = useState(false);
+
+  // Fetch brands data from backend
+  const fetchBrands = async () => {
+    try {
+      const response = await axiosInstance.get("/fetch_brands"); // Replace with your API endpoint
+      setTableData(response.data);
+    } catch (error) {
+      console.error("Failed to fetch brands:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBrands(); // Fetch data on component mount
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (editMode) {
-      setTableData((prev) =>
-        prev.map((row) =>
-          row.id === formData.id ? { ...row, ...formData } : row
-        )
-      );
+    const formDataObj = new FormData();
+    formDataObj.append("title", formData.title);
+    formDataObj.append("details", formData.details);
+    formDataObj.append("url", formData.url);
+    if (formData.b_image) formDataObj.append("b_image", formData.b_image);
+
+    try {
+      if (editMode) {
+        // Update an existing brand
+        await axiosInstance.put(`/update_brand/${formData.b_id}`, formDataObj); // Replace with your API endpoint
+      } else {
+        // Add a new brand
+        await axiosInstance.post("/add_brand", formDataObj); // Replace with your API endpoint
+      }
+
+      // Refetch updated brands
+      await fetchBrands();
+
+      // Reset form and close dialog
+      setShowForm(false);
+      setFormData({ b_id: null, title: "", details: "", url: "", b_image: null });
       setEditMode(false);
-    } else {
-      const newRow = {
-        id: tableData.length + 1,
-        headline: formData.headline,
-        description: formData.description,
-        image: formData.image,
-        link: formData.link, // Include the link field
-      };
-
-      setTableData([...tableData, newRow]);
+    } catch (error) {
+      console.error("Failed to submit brand:", error);
     }
-
-    setShowForm(false);
-    setFormData({ id: null, headline: "", description: "", image: null, link: "" });
   };
 
   const handleEdit = (row) => {
-    setFormData(row);
+    setFormData({
+      b_id: row.b_id,
+      title: row.title,
+      details: row.details,
+      url: row.url,
+      b_image: null, // Image input will be reset
+    });
     setEditMode(true);
     setShowForm(true);
   };
 
-  const handleDelete = (id) => {
-    setTableData((prev) => prev.filter((row) => row.id !== id));
+  const handleDelete = async (b_id) => {
+    try {
+      await axiosInstance.delete(`/delete_brand/${b_id}`); // Replace with your API endpoint
+      await fetchBrands(); // Refetch updated brands
+    } catch (error) {
+      console.error("Failed to delete brand:", error);
+    }
   };
 
   const handleCancel = () => {
     setShowForm(false);
     setEditMode(false);
-    setFormData({ id: null, headline: "", description: "", image: null, link: "" });
+    setFormData({ b_id: null, title: "", details: "", url: "", b_image: null });
   };
 
   return (
-    <div className="container">
-      <h2 className="title">Brands</h2>
+    <div className={styles.container}>
+      <h2 className={styles.title}>Brands</h2>
       <Button
         variant="contained"
         color="primary"
-        className="addButton"
+        className={styles.addButton}
         onClick={() => setShowForm(true)}
       >
         Add New
@@ -84,41 +114,41 @@ const Brands = () => {
         <Dialog open={showForm} onClose={handleCancel}>
           <DialogTitle>{editMode ? "Edit Brand" : "Add New Brand"}</DialogTitle>
           <DialogContent>
-            <form className="form" onSubmit={handleSubmit}>
-              <div className="formGroup">
-                <label>Headline</label>
+            <form className={styles.form} onSubmit={handleSubmit}>
+              <div className={styles.formGroup}>
+                <label>Title</label>
                 <TextField
-                  name="headline"
-                  value={formData.headline}
+                  name="title"
+                  value={formData.title}
                   onChange={handleInputChange}
                   fullWidth
                 />
               </div>
-              <div className="formGroup">
-                <label>Description</label>
+              <div className={styles.formGroup}>
+                <label>Details</label>
                 <TextField
-                  name="description"
-                  value={formData.description}
+                  name="details"
+                  value={formData.details}
                   onChange={handleInputChange}
                   fullWidth
                 />
               </div>
-              <div className="formGroup">
-                <label>Link</label>
+              <div className={styles.formGroup}>
+                <label>URL</label>
                 <TextField
-                  name="link"
-                  value={formData.link}
+                  name="url"
+                  value={formData.url}
                   onChange={handleInputChange}
                   fullWidth
                 />
               </div>
-              <div className="formGroup">
+              <div className={styles.formGroup}>
                 <label>Image</label>
                 <input
                   type="file"
-                  name="image"
+                  name="b_image"
                   onChange={(e) =>
-                    setFormData({ ...formData, image: e.target.files[0] })
+                    setFormData({ ...formData, b_image: e.target.files[0] })
                   }
                 />
               </div>
@@ -135,38 +165,38 @@ const Brands = () => {
         </Dialog>
       )}
 
-      <table className="table">
+      <table className={styles.table}>
         <thead>
           <tr>
             <th>ID</th>
-            <th>Headline</th>
-            <th>Description</th>
-            <th>Link</th> {/* New Link column */}
+            <th>Title</th>
+            <th>Details</th>
+            <th>URL</th>
             <th>Image</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {tableData.map((row) => (
-            <tr key={row.id}>
-              <td>{row.id}</td>
-              <td>{row.headline}</td>
-              <td>{row.description}</td>
+            <tr key={row.b_id}>
+              <td>{row.b_id}</td>
+              <td>{row.title}</td>
+              <td>{row.details}</td>
               <td>
-                {row.link ? (
-                  <a href={row.link} target="_blank" rel="noopener noreferrer">
-                    {row.link}
+                {row.url ? (
+                  <a href={row.url} target="_blank" rel="noopener noreferrer">
+                    {row.url}
                   </a>
                 ) : (
-                  "No Link"
+                  "No URL"
                 )}
               </td>
               <td>
-                {row.image ? (
+                {row.b_image ? (
                   <img
-                    src={URL.createObjectURL(row.image)}
+                    src={row.b_image} // Assume backend returns a full image URL
                     alt="brand"
-                    className="brandImage"
+                    className={styles.brandImage}
                   />
                 ) : (
                   "No Image"
@@ -183,7 +213,7 @@ const Brands = () => {
                 <Button
                   variant="contained"
                   color="secondary"
-                  onClick={() => handleDelete(row.id)}
+                  onClick={() => handleDelete(row.b_id)}
                   style={{ marginLeft: "10px" }}
                 >
                   Delete

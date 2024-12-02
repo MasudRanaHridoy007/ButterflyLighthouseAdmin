@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import "../styles/TopLevelManagement.module.css"; // Ensure the CSS file is imported
+import React, { useState, useEffect } from "react";
+import axiosInstance from "../Axios/axiosinstance";
+import styles from "../styles/TopLevelManagement.module.css"; // Import as a CSS module
 import {
   Button,
   TextField,
@@ -14,69 +15,92 @@ const TopLevelManagement = () => {
   const [formData, setFormData] = useState({
     id: null,
     name: "",
-    description: "",
+    designation: "",
     image: null,
   });
   const [tableData, setTableData] = useState([]); // State to hold table data
   const [editMode, setEditMode] = useState(false); // State to track if editing
+
+  // Fetch data from backend on component mount
+  const fetchTableData = async () => {
+    try {
+      const response = await axiosInstance.get("/fetch_management"); // Replace with your API endpoint
+      setTableData(response.data); // Populate table data with fetched data
+    } catch (error) {
+      console.error("Failed to fetch data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchTableData(); // Fetch data on component mount
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (editMode) {
-      // Update an existing row
-      setTableData((prev) =>
-        prev.map((row) =>
-          row.id === formData.id ? { ...row, ...formData } : row
-        )
-      );
+    const formDataObj = new FormData();
+    formDataObj.append("name", formData.name);
+    formDataObj.append("designation", formData.designation);
+    if (formData.image) formDataObj.append("m_image", formData.image);
+
+    try {
+      if (editMode) {
+        // Update existing item
+        await axiosInstance.put(`/update_management/${formData.id}`, formDataObj); // Replace with your API endpoint
+      } else {
+        // Add new item
+        await axiosInstance.post("/add_management", formDataObj); // Replace with your API endpoint
+      }
+
+      // Refetch updated table data
+      await fetchTableData();
+
+      // Reset form and close dialog
+      setShowForm(false);
+      setFormData({ id: null, name: "", designation: "", image: null });
       setEditMode(false);
-    } else {
-      // Add a new row
-      const newRow = {
-        id: tableData.length + 1, // Assign a unique ID (could be generated differently)
-        name: formData.name,
-        description: formData.description,
-        image: formData.image,
-      };
-
-      setTableData([...tableData, newRow]);
+    } catch (error) {
+      console.error("Failed to submit data:", error);
     }
-
-    setShowForm(false); // Close the form
-    setFormData({ id: null, name: "", description: "", image: null }); // Clear form data
   };
 
   const handleEdit = (row) => {
-    setFormData(row); // Populate form data with row details
+    setFormData({ ...row, image: null }); // Reset image input for editing
     setEditMode(true);
     setShowForm(true); // Show the form for editing
   };
 
-  const handleDelete = (id) => {
-    setTableData((prev) => prev.filter((row) => row.id !== id)); // Remove row with the specified ID
+  const handleDelete = async (id) => {
+    try {
+      await axiosInstance.delete(`/delete_management/${id}`); // Replace with your API endpoint
+
+      // Refetch updated table data
+      await fetchTableData();
+    } catch (error) {
+      console.error("Failed to delete data:", error);
+    }
   };
 
   const handleCancel = () => {
     setShowForm(false); // Hide form if Cancel is clicked
     setEditMode(false); // Exit edit mode
-    setFormData({ id: null, name: "", description: "", image: null }); // Clear form data
+    setFormData({ id: null, name: "", designation: "", image: null }); // Clear form data
   };
 
   return (
-    <div className="container">
-      <h2 className="title">Top Level Management</h2>
+    <div className={styles.container}>
+      <h2 className={styles.title}>Top Level Management</h2>
 
       {/* Add New Button */}
       <Button
         variant="contained"
         color="primary"
-        className="addButton"
+        className={styles.addButton}
         onClick={() => setShowForm(true)} // Show the form when clicked
       >
         Add New
@@ -87,8 +111,8 @@ const TopLevelManagement = () => {
         <Dialog open={showForm} onClose={handleCancel}>
           <DialogTitle>{editMode ? "Edit Item" : "Add New Item"}</DialogTitle>
           <DialogContent>
-            <form className="form" onSubmit={handleSubmit}>
-              <div className="formGroup">
+            <form className={styles.form} onSubmit={handleSubmit}>
+              <div className={styles.formGroup}>
                 <label>Name</label>
                 <TextField
                   name="name"
@@ -97,16 +121,16 @@ const TopLevelManagement = () => {
                   fullWidth
                 />
               </div>
-              <div className="formGroup">
-                <label>Description</label>
+              <div className={styles.formGroup}>
+                <label>Designation</label>
                 <TextField
-                  name="description"
-                  value={formData.description}
+                  name="designation"
+                  value={formData.designation}
                   onChange={handleInputChange}
                   fullWidth
                 />
               </div>
-              <div className="formGroup">
+              <div className={styles.formGroup}>
                 <label>Image</label>
                 <input
                   type="file"
@@ -130,13 +154,13 @@ const TopLevelManagement = () => {
       )}
 
       {/* Table to display data */}
-      <table className="table">
+      <table className={styles.table}>
         <thead>
           <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
             <th>Image</th>
+            <th>Name</th>
+            <th>Designation</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -144,20 +168,15 @@ const TopLevelManagement = () => {
           {tableData.map((row) => (
             <tr key={row.id}>
               <td>{row.id}</td>
-              <td>{row.name}</td>
-              <td>{row.description}</td>
               <td>
                 {row.image ? (
-                  <img
-                    src={URL.createObjectURL(row.image)}
-                    alt="image"
-                    className="memberImage"
-                    style={{ width: "300px", height: "300px", objectFit: "cover" }}
-                  />
+                  <img src={row.image} alt="Management" className={styles.memberImage} />
                 ) : (
                   "No Image"
                 )}
               </td>
+              <td>{row.name}</td>
+              <td>{row.designation}</td>
               <td>
                 <Button
                   variant="contained"

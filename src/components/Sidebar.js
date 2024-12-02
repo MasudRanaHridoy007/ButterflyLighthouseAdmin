@@ -1,36 +1,57 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faChartLine, faBell, faChartPie, faBox, faSignOutAlt, faSun } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faChartLine, faBell, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import styles from "../styles/Sidebar.module.css";
-import { Link } from 'react-router-dom';
-const Sidebar = () => {
-  const [darkMode, setDarkMode] = useState(true);
+import { NavLink, useNavigate } from 'react-router-dom';
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
+const Sidebar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('lighthouse_admin_token');
+    navigate('/login');
   };
 
   return (
-    <div className={`${styles.sidebar} ${darkMode ? styles.dark : styles.light}`}>
+    <div className={styles.sidebar}>
       <div className={styles.sidebarHeader}>
-        <div className={styles.logo}>
-          <FontAwesomeIcon icon={faHome} size="2x" />
-        </div>
+        <img src="/assets/bb.png" alt="Logo" className={styles.logo} />
         <div className={styles.email}>Admin Panel</div>
       </div>
 
-
-
       <nav className={styles.nav}>
         <ul>
-          <Link to="/SliderSection" className={styles.navItem}><FontAwesomeIcon icon={faHome} /> SliderSection</Link>
-          <Link to="/TopLevelManagement" className={styles.navItem}><FontAwesomeIcon icon={faChartLine} /> TopLevelManagement</Link>
-          <Link to="/Brands" className={styles.navItem}><FontAwesomeIcon icon={faBell} /> Brands</Link>
+          <NavLink
+            to="/slidersection"
+            className={({ isActive }) =>
+              isActive ? `${styles.navItem} ${styles.active}` : styles.navItem
+            }
+          >
+            <FontAwesomeIcon icon={faHome} /> Slider Section
+          </NavLink>
+          <NavLink
+            to="/toplevelmanagement"
+            className={({ isActive }) =>
+              isActive ? `${styles.navItem} ${styles.active}` : styles.navItem
+            }
+          >
+            <FontAwesomeIcon icon={faChartLine} /> Management Team
+          </NavLink>
+          <NavLink
+            to="/brands"
+            className={({ isActive }) =>
+              isActive ? `${styles.navItem} ${styles.active}` : styles.navItem
+            }
+          >
+            <FontAwesomeIcon icon={faBell} /> Brands
+          </NavLink>
         </ul>
       </nav>
 
       <div className={styles.footer}>
-        <button className={styles.logout}><FontAwesomeIcon icon={faSignOutAlt} /> Logout</button>
+        <button className={styles.logout} onClick={handleLogout}>
+          <FontAwesomeIcon icon={faSignOutAlt} /> Logout
+        </button>
       </div>
     </div>
   );

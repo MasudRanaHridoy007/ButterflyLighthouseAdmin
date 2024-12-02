@@ -24,11 +24,13 @@
 }
 
 .logo {
-  margin-right: 10px; /* Space between logo and text */
+  margin-right: 10px;
+  width: 40px;
 }
 
 .email {
-  font-size: 0.9rem; /* Adjusted for better visibility */
+  font-size: 25px; 
+  font-weight: bold;
 }
 
 .nav {
@@ -41,27 +43,11 @@
   margin: 0; /* Remove default margin */
 }
 
-.navItem {
-  display: flex;
-  align-items: center;
-  padding: 10px 10px; /* Add inner spacing */
-  font-size: 1rem; /* Uniform font size */
-  cursor: pointer;
-  gap: 10px; /* Space between icon and text */
-  text-decoration: none; /* Remove underline for links */
-  color: inherit; /* Match sidebar text color */
-  border-radius: 5px; /* Rounded hover effect */
-  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
-  margin-bottom: 20px;
-}
 
-.navItem:hover {
-  background-color: #333; /* Dark hover effect */
-  color: #fff; /* Light text on hover */
-}
 
 .footer {
   margin-top: auto; /* Push footer to the bottom */
+  margin-bottom: 50px;
 }
 
 .logout,
@@ -83,4 +69,31 @@
 .themeToggle:hover {
   background-color: #333; /* Dark hover effect */
   color: #fff; /* Light text on hover */
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  padding: 10px 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.navItem:hover {
+  background-color: #607D8B;
+  color: #fff;
+}
+
+/* Active state styles */
+.active {
+  background-color:  #333; 
+  color: white; /* White text for contrast */
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
