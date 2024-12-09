@@ -13,7 +13,7 @@ body,
 html {
   margin: 0;
   padding: 0;
-  font-family: 'Arial', sans-serif;
+
   height: 100%;
 }
 
@@ -128,7 +128,7 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-color));
+  background: linear-gradient(135deg, var(--primary-color), #FF5722);
   position: relative;
 }
 
